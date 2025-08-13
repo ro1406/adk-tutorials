@@ -1,6 +1,6 @@
 # Medical Appointment Booking Agent
 
-Based on tutorial on [Medium](https://medium.com/@rohanmitra8/deploying-a-google-adk-agent-with-docker-and-docker-compose-4a0e85ca2970).
+Based on tutorial on [Medium](https://medium.com/@rohanmitra8/deploying-a-google-adk-agent-with-docker-and-docker-compose-4a0e85ca2970) on "Deploying A Google ADK Agent With Docker And Docker Compose".
 
 Before running anything, first initialize the Google Cloud CLI using `gcloud init`
 Then log in to GCloud using `gcloud auth application-default login`
