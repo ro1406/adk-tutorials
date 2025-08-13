@@ -1,0 +1,45 @@
+name: med-agent-api
+
+services:
+  server:
+    image: med-agent-api
+    restart: on-failure
+    pull_policy: build
+    build:
+      context: ./
+    command: [ "fastapi", "dev", "app.py", "--host", "0.0.0.0", "--port", "8000" ]
+    depends_on:
+      - agent
+    volumes:
+      - ./:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - ADK_AGENT_URL=http://agent:8002
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://0.0.0.0:80/healthcheck" ]
+    networks:
+      - med-agent-backend
+
+  agent:
+    image: medical-booking-agent
+    restart: on-failure
+    pull_policy: build
+    build:
+      context: ./
+    command: ["adk", "api_server", "--host", "0.0.0.0", "--port", "8002", "./med-agent"]
+    ports:
+      - "8002:8002"
+    volumes:
+      - ~/.config/gcloud/application_default_credentials.json:/app/gcloud_credentials.json
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/gcloud_credentials.json
+      - GOOGLE_GENAI_USE_VERTEXAI=TRUE
+      - GOOGLE_CLOUD_PROJECT=<your-project-name>
+      - GOOGLE_CLOUD_LOCATION=<region-name>
+    networks:
+      - med-agent-backend
+
+networks:
+  med-agent-backend:
+    driver: bridge

@@ -1,0 +1,6 @@
+.env
+gcloud_credentials.json
+*.docx
+*.pdf
+*.zip
+*.pyc
