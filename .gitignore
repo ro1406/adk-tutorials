@@ -4,3 +4,6 @@ gcloud_credentials.json
 *.pdf
 *.zip
 *.pyc
+*.jpeg
+*.jpg
+*.png
